@@ -11,7 +11,7 @@ namespace app\admin\controller;
 use think\Db;
 use \app\common\controller\AdminBase;
 
-class Product extends AdminBase{
+class Category extends AdminBase{
 
     //初始化
     public function _initialize(){
@@ -32,11 +32,11 @@ class Product extends AdminBase{
      * @param $title   分类名称
      * @param $parent_id  父级id
      */
-    public function add_category(){
+    public function addCategory(){
         $data = $this->request->only(['category_name', 'parent_id']);
 
         //验证空值
-        $res_require = $this->validate($data,'Product.category_add');
+        $res_require = $this->validate($data,'Category.category_add');
         if($res_require !== true)
             return json(['data' =>[],'code' => '201','msg' => $res_require]);
 
@@ -47,6 +47,11 @@ class Product extends AdminBase{
         //校验权限
         if(!is_bool(self::$res_auth))
             return self::$res_auth;
+
+        //验证父级id是否存在
+        $res_p = db('category')->where('id',$data['parent_id'])->find();
+        if(empty($res_p))
+            return json(['data' =>[],'code' => '202','msg' => '上级分类不存在']);
 
         Db::startTrans();
         //入库
@@ -68,11 +73,11 @@ class Product extends AdminBase{
      *  3.1 不存在返回提示
      * 4、修改数据
      */
-    public function update_category(){
+    public function updateCategory(){
         $data = $this->request->only(['id','category_name']);
 
         //验证空值
-        $res_require = $this->validate($data,'Product.category_update');
+        $res_require = $this->validate($data,'Category.category_update');
         if($res_require !== true)
             return json(['data' =>[],'code' => '201','msg' => $res_require]);
 
@@ -93,11 +98,70 @@ class Product extends AdminBase{
     }
 
     /**
-     * 产品分类列表
-     *
+     * 删除分类
+     * 根据接收到的id  进行数据库数据的删除处理
+     * 1、验证空值
+     *  1.1 为空返回提示
+     * 2、验证数据是否存在
+     *  2.1 不存在返回提示
+     * 3、执行删除
      */
+    public function delCategory(){
+        $data = $this->request->only(['id']);
 
+        //验证空值
+        $result = $this->validate($data,'Category.category_del');
+        if($result!==true)
+            return json(['data' => [],'code' => '201','msg' => $result]);
 
+        //校验当前账户是否有效
+        if(!is_int(self::$res_key))
+            return self::$res_key;
 
+        //校验权限
+        if(!is_bool(self::$res_auth))
+            return self::$res_auth;
+
+        //遍历数组
+        $id_array = explode(',',$data['id']);
+        if(is_array($id_array)){
+            foreach($id_array as $k=>$v){
+                //删除
+                $this_data = db('category')->delete($v);
+            }
+        }
+        if($this_data!=0)
+            return json(['data' => [],'code' => '200','msg' => '删除成功']);
+        return json(['data' => [],'code' => '202','msg' => '删除失败']);
+    }
+
+    /**
+     * 产品分类列表
+     * 根据分页的页数与条数获取数据库相应的数据返回
+     */
+    public function listCategory(){
+        $data = $this->request->only(['page','limit']);
+
+        //验证空值
+        $result = $this->validate($data,'Category.category_list');
+        if($result!==true)
+            return json(['data' => [],'code' => '201','msg' => $result]);
+
+        //校验当前账户是否有效
+        if(!is_int(self::$res_key))
+            return self::$res_key;
+
+        //校验权限
+        if(!is_bool(self::$res_auth))
+            return self::$res_auth;
+
+        //获取数据
+        $temp['status']  = '1';
+        $cate_data = db('category')->where($temp)->order('id desc')->page($data['page'],$data['limit'])->select();
+        if(empty($cate_data))
+            return json(['data' => [],'code' => '201','msg' => '数据为空']);
+
+        return json(['data' => $cate_data,'code' => '201','msg' => '获取成功']);
+    }
 
 }

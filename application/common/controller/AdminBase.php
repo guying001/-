@@ -30,7 +30,7 @@ class AdminBase extends Controller {
      * @return json|int
      */
     public function getKey(){
-        $key = '21505719010';//input('key',null);
+        $key = '21505785720';//input('key',null);
         if(is_null($key))
             return json(['data'=>[],'code'=>403,'msg'=>'key不能为空']);
 

@@ -77,10 +77,11 @@ class Login extends Controller{
     public function test(){
         $http = new \http\Http();
         $data = [
-             'id' => '3',
-             'category_name' => '测试分类修改',
+//           'page' => '1',
+            'category_name' => '10',
+           'parent_id'  => '',
         ];
-        $res = $http->post('http://www.aikeqin.com/admin/product/update_category',$data);
+        $res = $http->post('http://www.aikeqin.com/admin/category/addCategory',$data);
         dump(json_decode($res,true));
         dump($res);
 
