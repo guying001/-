@@ -11,7 +11,7 @@ use think\Validate;
 class Category extends Validate {
 
     protected $rule = [
-        //产品分类
+        //产品分类 
         'category_name' => 'require',
         'parent_id' => 'require',
         'id' => 'require',
