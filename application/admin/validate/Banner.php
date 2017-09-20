@@ -33,8 +33,8 @@ class Banner extends Validate {
 
     protected $scene = [
         'banner_add'   =>  ['banner_name','parent_id','file'],
-        'category_update'   =>  ['category_name','id'],
-        'category_list'   =>  ['page','limit'],
-        'category_del'   =>  ['id'],
+        'banner_update'   =>  ['banner_name','id','file'],
+        'banner_list'   =>  ['page','limit'],
+        'banner_del'   =>  ['id'],
     ];
 }

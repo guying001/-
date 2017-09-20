@@ -77,11 +77,12 @@ class Login extends Controller{
     public function test(){
         $http = new \http\Http();
         $data = [
-//           'page' => '1',
-            'category_name' => '10',
-           'parent_id'  => '',
+//            'file' => 'img_url',
+//            'banner_name' => '广告标题修改',
+            'page'  => '1',
+            'limit'  => '10',
         ];
-        $res = $http->post('http://www.aikeqin.com/admin/category/addCategory',$data);
+        $res = $http->post('http://www.aikeqin.com/admin/banner/listBanner',$data);
         dump(json_decode($res,true));
         dump($res);
 

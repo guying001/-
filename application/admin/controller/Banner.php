@@ -65,8 +65,8 @@ class Banner extends AdminBase{
     }
 
     /**
-     * 修改产品分类接口
-     * 1、接收分类id
+     * 修改banner接口
+     * 1、接收id
      *  1.1 为空返回提示
      * 2、验证数据管理员权限
      *  2.1 返回提示
@@ -74,11 +74,11 @@ class Banner extends AdminBase{
      *  3.1 不存在返回提示
      * 4、修改数据
      */
-    public function updateCategory(){
-        $data = $this->request->only(['id','category_name']);
+    public function updateBanner(){
+        $data = $this->request->only(['id','banner_name','file','parent_id']);
 
         //验证空值
-        $res_require = $this->validate($data,'Category.category_update');
+        $res_require = $this->validate($data,'Banner.banner_update');
         if($res_require !== true)
             return json(['data' =>[],'code' => '201','msg' => $res_require]);
 
@@ -90,16 +90,25 @@ class Banner extends AdminBase{
         if(!is_bool(self::$res_auth))
             return self::$res_auth;
 
+        //验证父级id是否存在
+        if(isset($data['parent_id'])){
+            if ($data['parent_id'] > 0) {
+                $res_p = db('banner')->where('id', $data['parent_id'])->find();
+                if (empty($res_p))
+                    return json(['data' => [], 'code' => '202', 'msg' => '上级分类不存在']);
+            }
+        }
+
         //更新
         $temp['id']  = $data['id'];
-        $res = db('category')->where($temp)->setField(['category_name' => $data['category_name'],'admin_id'=>self::$admin_id]);
+        $res = db('banner')->where($temp)->setField(['banner_name' => $data['banner_name'],'file' => $data['file'],'parent_id' => $data['parent_id'],'admin_id'=>self::$admin_id]);
         if(!$res)
             return json(['data' => [],'code' => '201','msg' => '修改失败']);
         return json(['data' => [],'code' => '200','msg' => '修改成功']);
     }
 
     /**
-     * 删除分类
+     * 删除banner
      * 根据接收到的id  进行数据库数据的删除处理
      * 1、验证空值
      *  1.1 为空返回提示
@@ -107,11 +116,11 @@ class Banner extends AdminBase{
      *  2.1 不存在返回提示
      * 3、执行删除
      */
-    public function delCategory(){
+    public function delBanner(){
         $data = $this->request->only(['id']);
 
         //验证空值
-        $result = $this->validate($data,'Category.category_del');
+        $result = $this->validate($data,'Banner.banner_del');
         if($result!==true)
             return json(['data' => [],'code' => '201','msg' => $result]);
 
@@ -128,7 +137,7 @@ class Banner extends AdminBase{
         if(is_array($id_array)){
             foreach($id_array as $k=>$v){
                 //删除
-                $this_data = db('category')->delete($v);
+                $this_data = db('banner')->delete($v);
             }
         }
         if($this_data!=0)
@@ -137,14 +146,14 @@ class Banner extends AdminBase{
     }
 
     /**
-     * 产品分类列表
+     * banner列表
      * 根据分页的页数与条数获取数据库相应的数据返回
      */
-    public function listCategory(){
+    public function listBanner(){
         $data = $this->request->only(['page','limit']);
 
         //验证空值
-        $result = $this->validate($data,'Category.category_list');
+        $result = $this->validate($data,'Banner.banner_list');
         if($result!==true)
             return json(['data' => [],'code' => '201','msg' => $result]);
 
@@ -158,7 +167,7 @@ class Banner extends AdminBase{
 
         //获取数据
         $temp['status']  = '1';
-        $cate_data = db('category')->where($temp)->order('id desc')->page($data['page'],$data['limit'])->select();
+        $cate_data = db('banner')->where($temp)->order('id desc')->page($data['page'],$data['limit'])->select();
         if(empty($cate_data))
             return json(['data' => [],'code' => '201','msg' => '数据为空']);
 
