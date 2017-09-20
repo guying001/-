@@ -49,7 +49,7 @@ class Category extends AdminBase{
             return self::$res_auth;
 
         //验证父级id是否存在
-        if($data['parent_id'] > 0) {
+        if($data['parent_id'] > 0) { 
             $res_p = db('category')->where('id', $data['parent_id'])->find();
             if (empty($res_p))
                 return json(['data' => [], 'code' => '202', 'msg' => '上级分类不存在']);
