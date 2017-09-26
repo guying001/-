@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-09-15 17:08:08
+Date: 2017-09-26 17:47:59
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `ai_admin` (
 -- ----------------------------
 -- Records of ai_admin
 -- ----------------------------
-INSERT INTO `ai_admin` VALUES ('2', 'admin', 'b63ddacba6c3835cc1b250c5d9de6ac1', '1', '2016-10-18 15:28:37', '2017-09-01 10:04:21', '127.0.0.1');
+INSERT INTO `ai_admin` VALUES ('2', 'admin', '21232f297a57a5a743894a0e4a801fc3', '1', '2016-10-18 15:28:37', '2017-09-26 17:19:59', '127.0.0.1');
 INSERT INTO `ai_admin` VALUES ('3', 'hao', 'b63ddacba6c3835cc1b250c5d9de6ac1', '1', '2017-08-31 09:15:20', '2017-08-31 09:15:24', null);
 
 -- ----------------------------
@@ -48,13 +48,21 @@ CREATE TABLE `ai_admin_login` (
   `time` datetime NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：正常；2：失效',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ai_admin_login
 -- ----------------------------
 INSERT INTO `ai_admin_login` VALUES ('1', '2', '21504144050', '2017-09-07 14:18:19', '1');
 INSERT INTO `ai_admin_login` VALUES ('2', '2', '21504231461', '2017-09-01 14:47:01', '1');
+INSERT INTO `ai_admin_login` VALUES ('3', '2', '21505467477', '2017-09-15 17:24:37', '1');
+INSERT INTO `ai_admin_login` VALUES ('4', '2', '21505714647', '2017-09-18 14:04:07', '1');
+INSERT INTO `ai_admin_login` VALUES ('5', '2', '21505719010', '2017-09-18 16:18:16', '1');
+INSERT INTO `ai_admin_login` VALUES ('6', '2', '21505785720', '2017-09-19 11:29:54', '1');
+INSERT INTO `ai_admin_login` VALUES ('7', '2', '21505811028', '2017-09-19 16:51:41', '1');
+INSERT INTO `ai_admin_login` VALUES ('8', '2', '21505873691', '2017-09-20 11:45:45', '1');
+INSERT INTO `ai_admin_login` VALUES ('9', '2', '21505889364', '2017-09-20 14:36:28', '1');
+INSERT INTO `ai_admin_login` VALUES ('10', '2', '21506417599', '2017-09-26 17:39:00', '1');
 
 -- ----------------------------
 -- Table structure for `ai_auth_group`
@@ -219,3 +227,144 @@ INSERT INTO `ai_auth_rule` VALUES ('136', 'admin/Evaluate/save', '保存评价',
 INSERT INTO `ai_auth_rule` VALUES ('137', 'admin/Evaluate/edit', '编辑评价', '1', '0', '129', '', '0', '');
 INSERT INTO `ai_auth_rule` VALUES ('138', 'admin/Evaluate/update', '更新评价', '1', '0', '129', '', '0', '');
 INSERT INTO `ai_auth_rule` VALUES ('139', 'admin/Evaluate/delete', '删除评价', '1', '0', '129', '', '0', '');
+
+-- ----------------------------
+-- Table structure for `ai_banner`
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_banner`;
+CREATE TABLE `ai_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL COMMENT '分类id',
+  `banner_name` varchar(128) NOT NULL COMMENT '分类名称',
+  `file` varchar(500) DEFAULT NULL COMMENT '图片地址',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `creat_time` datetime NOT NULL COMMENT '创建时间',
+  `admin_id` int(11) DEFAULT '1' COMMENT '管理员id',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态  1->正常  2->禁止',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ai_banner
+-- ----------------------------
+INSERT INTO `ai_banner` VALUES ('4', '0', '广告标题4', 'img_url', '0', '2017-09-20 10:16:39', '2', '1');
+
+-- ----------------------------
+-- Table structure for `ai_category`
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_category`;
+CREATE TABLE `ai_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL COMMENT '分类id',
+  `category_name` varchar(128) NOT NULL COMMENT '分类名称',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `creat_time` datetime NOT NULL COMMENT '创建时间',
+  `admin_id` int(11) DEFAULT '1' COMMENT '管理员id',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态  1->正常  2->禁止',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ai_category
+-- ----------------------------
+INSERT INTO `ai_category` VALUES ('27', '0', '分类', '0', '2017-09-19 10:49:49', '2', '1');
+INSERT INTO `ai_category` VALUES ('26', '0', '分类', '0', '2017-09-19 10:49:49', '2', '1');
+INSERT INTO `ai_category` VALUES ('25', '0', '分类', '0', '2017-09-19 10:49:49', '2', '1');
+INSERT INTO `ai_category` VALUES ('24', '0', '分类', '0', '2017-09-19 10:49:48', '2', '1');
+INSERT INTO `ai_category` VALUES ('23', '0', '9999', '0', '2017-09-19 10:49:36', '2', '1');
+INSERT INTO `ai_category` VALUES ('22', '0', '9999', '0', '2017-09-19 10:49:35', '2', '1');
+INSERT INTO `ai_category` VALUES ('21', '0', '9999', '0', '2017-09-19 10:49:35', '2', '1');
+INSERT INTO `ai_category` VALUES ('20', '0', '9999', '0', '2017-09-19 10:49:35', '2', '1');
+INSERT INTO `ai_category` VALUES ('19', '0', '9999', '0', '2017-09-19 10:49:35', '2', '1');
+INSERT INTO `ai_category` VALUES ('18', '0', '9999', '0', '2017-09-19 10:49:34', '2', '1');
+INSERT INTO `ai_category` VALUES ('31', '0', '分类', '0', '2017-09-19 11:25:50', '2', '1');
+INSERT INTO `ai_category` VALUES ('28', '0', '分类', '0', '2017-09-19 10:49:49', '2', '1');
+INSERT INTO `ai_category` VALUES ('29', '0', '分类', '0', '2017-09-19 10:49:49', '2', '1');
+INSERT INTO `ai_category` VALUES ('30', '0', 'updateCategory', '0', '2017-09-19 10:49:50', '2', '1');
+
+-- ----------------------------
+-- Table structure for `ai_product`
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_product`;
+CREATE TABLE `ai_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cate_id` int(11) DEFAULT NULL COMMENT '分类id',
+  `pro_name` varchar(128) NOT NULL COMMENT '分类名称',
+  `stock` int(11) DEFAULT '1' COMMENT '库存',
+  `market_price` float(8,2) DEFAULT '0.00' COMMENT '市场价格',
+  `price` float(8,2) DEFAULT '0.00' COMMENT '本店价格',
+  `spec_id` int(11) DEFAULT '0' COMMENT '规格id',
+  `sales` int(11) DEFAULT '0' COMMENT '销量',
+  `image` varchar(128) DEFAULT NULL COMMENT '商品图片',
+  `content` text COMMENT '商品详情',
+  `para` text COMMENT '商品参数',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `creat_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `admin_id` int(11) DEFAULT '1' COMMENT '管理员id',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态  1->未上架  2->上架  3->推荐',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ai_product
+-- ----------------------------
+INSERT INTO `ai_product` VALUES ('4', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:09', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('3', '30', '商品发布', '100', '30.00', '29.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:43:55', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('5', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:10', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('6', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:10', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('7', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:11', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('8', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:11', null, '2', '1');
+INSERT INTO `ai_product` VALUES ('9', '30', '商品发布', '100', '60.00', '49.99', '1', '0', 'img_url', '商品详情2', '商品参数2', '0', '2017-09-20 11:44:11', null, '2', '1');
+
+-- ----------------------------
+-- Table structure for `ai_spec`
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_spec`;
+CREATE TABLE `ai_spec` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `spec_name` varchar(128) NOT NULL COMMENT '分类名称',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `creat_time` datetime NOT NULL COMMENT '创建时间',
+  `admin_id` int(11) DEFAULT '1' COMMENT '管理员id',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态  1->正常  2->禁止',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ai_spec
+-- ----------------------------
+INSERT INTO `ai_spec` VALUES ('2', '规格1修改', '0', '2017-09-26 17:22:42', '2', '1');
+
+-- ----------------------------
+-- Table structure for `ai_user_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `ai_user_info`;
+CREATE TABLE `ai_user_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) DEFAULT NULL COMMENT '分类id',
+  `openid` varchar(200) NOT NULL DEFAULT '' COMMENT '用户openid',
+  `headimgur` varchar(500) DEFAULT '' COMMENT '用户头像地址',
+  `name` varchar(128) DEFAULT '' COMMENT '用户名称',
+  `sex` tinyint(1) DEFAULT '0' COMMENT '性别 0：未知   1：男 2：女',
+  `city` varchar(50) DEFAULT '' COMMENT '城市',
+  `ip` varchar(20) DEFAULT '' COMMENT 'ip地址',
+  `level_id` int(5) DEFAULT '1' COMMENT '等级id',
+  `sort` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
+  `creat_time` datetime NOT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `admin_id` int(11) DEFAULT '1' COMMENT '管理员id',
+  `status` tinyint(1) DEFAULT '1' COMMENT '状态  1->未上架  2->上架  3->推荐',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ai_user_info
+-- ----------------------------
+INSERT INTO `ai_user_info` VALUES ('4', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:09', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('3', '30', '商品发布', '100', '30.00', '30', '1', '0', '0', '0', '2017-09-20 11:43:55', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('5', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:10', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('6', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:10', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('7', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:11', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('8', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:11', null, '2', '1');
+INSERT INTO `ai_user_info` VALUES ('9', '30', '商品发布', '100', '60.00', '50', '1', '0', '0', '0', '2017-09-20 11:44:11', null, '2', '1');
