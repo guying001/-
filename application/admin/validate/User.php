@@ -61,6 +61,7 @@ class User extends Validate
         'user_list'   =>  ['page','limit'],
         'user_del'   =>  ['id'],
         'user_dias'   =>  ['id'],
+        'user_show'   =>  ['id'],
         'user_updatePass'   =>  ['id','password','repassword','newpassword'],
     ];
 }

@@ -214,6 +214,34 @@ class User extends AdminBase{
     }
 
     /**
+     * 查看用户详情接口
+     * 单独点击用户  查看详情
+     */
+    public function showUserInfo(){
+        $data = $this->request->only(['id']);
+
+        //验证空值
+        $res = $this->validate($data,'User.user_show');
+        if($res !== true)
+            return json(['data' => '','code' => '201','msg' => $res]);
+
+        //校验当前账户是否有效
+        if(!is_int(self::$res_key))
+            return self::$res_key;
+
+        //校验权限
+        if(!is_bool(self::$res_auth))
+            return self::$res_auth;
+
+        //验证用户是否存在
+        $res_id = db('user_info')->where('id',$data['id'])->find();
+        if(!$res_id)
+            return json(['data' =>[],'code' => '202','msg' => '用户不存在']);
+
+        return json(['data' =>$res_id,'code' => '200','msg' => '查看成功']);
+    }
+
+    /**
      * 停用用户操作接口
      * 管理员点击用户停用操作
      * 接收用户id ->修改状态 设置为停用状态
