@@ -1,6 +1,6 @@
 <?php
 /**
- * 产品类
+ * 产品类型类
  * Created by PhpStorm.
  * User: 小宝
  * Date: 2017年9月11日
@@ -33,7 +33,7 @@ class Category extends AdminBase{
      * @param $parent_id  父级id
      */
     public function addCategory(){
-        $data = $this->request->only(['category_name', 'parent_id']);
+        $data = $this->request->only(['category_name', 'parent_id','sort']);
 
         //验证空值
         $res_require = $this->validate($data,'Category.category_add');
@@ -49,7 +49,7 @@ class Category extends AdminBase{
             return self::$res_auth;
 
         //验证父级id是否存在
-        if($data['parent_id'] > 0) { 
+        if($data['parent_id'] > 0) {
             $res_p = db('category')->where('id', $data['parent_id'])->find();
             if (empty($res_p))
                 return json(['data' => [], 'code' => '202', 'msg' => '上级分类不存在']);
